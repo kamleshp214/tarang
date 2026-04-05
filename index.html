@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Tarang 2K26 — Meme Competition | Kamlesh Porwal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@300;400;600;700&family=Khand:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --orange:#FF5500;--red:#CC1E1E;--gold:#F0A500;--ember:#FFD166;
+  --black:#060606;--dark1:#0E0E0E;--dark2:#141414;--dark3:#1A1A1A;
+  --border:rgba(255,85,0,0.15);--text:#EDE8DF;--muted:rgba(237,232,223,0.45);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'Khand',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+#progress-bar{position:fixed;top:0;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--red),var(--orange),var(--gold));z-index:1000;box-shadow:0 0 10px rgba(255,85,0,0.8);transition:width .1s linear}
+
+#fire-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:.3}
+
+/* HERO */
+.hero{position:relative;z-index:2;min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 48px;text-align:center;overflow:hidden}
+.hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(to bottom,transparent,var(--black));pointer-events:none}
+
+.logo-wrap{position:relative;width:150px;height:150px;margin:0 auto 28px;animation:logo-in 1.2s cubic-bezier(.16,1,.3,1) both}
+@keyframes logo-in{from{transform:scale(.4) translateY(30px);opacity:0}to{transform:scale(1);opacity:1}}
+
+.logo-glow{position:absolute;inset:-24px;border-radius:50%;background:radial-gradient(circle,rgba(255,85,0,.3) 0%,transparent 70%);animation:glow-pulse 2.5s ease-in-out infinite;z-index:0}
+@keyframes glow-pulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.2);opacity:1}}
+
+.logo-spin{position:absolute;inset:-5px;border-radius:50%;background:conic-gradient(from 0deg,var(--red),var(--orange),var(--gold),var(--ember),var(--orange),var(--red));animation:spin 8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+.logo-mask{position:absolute;inset:3px;border-radius:50%;background:var(--black);z-index:1}
+
+.logo-img{position:absolute;inset:6px;z-index:2;border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.logo-img img{width:100%;height:100%;object-fit:cover;border-radius:50%}
+.logo-fb{width:100%;height:100%;display:none;flex-direction:column;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 40%,#2a0a00,#000);gap:2px;border-radius:50%}
+
+.hero-eyebrow{font-family:'Oswald',sans-serif;font-size:11px;font-weight:400;letter-spacing:6px;color:var(--orange);text-transform:uppercase;margin-bottom:10px;animation:fade-up .8s .4s both}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(76px,22vw,112px);line-height:.85;letter-spacing:4px;background:linear-gradient(160deg,#fff 0%,var(--ember) 35%,var(--orange) 65%,var(--red) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 40px rgba(255,85,0,.6));animation:fade-up .8s .5s both,flicker 5s 2s ease-in-out infinite}
+@keyframes flicker{0%,88%,92%,100%{filter:drop-shadow(0 0 40px rgba(255,85,0,.6))}90%{filter:drop-shadow(0 0 10px rgba(255,85,0,.15))}}
+.hero-year{font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,8vw,40px);letter-spacing:16px;color:var(--gold);margin-top:4px;animation:fade-up .8s .6s both}
+
+/* HINDI TEXT FIX */
+.hindi-text { letter-spacing: normal; font-family: 'Khand', sans-serif; font-weight: 500; }
+.hero-tagline{font-family:'Oswald',sans-serif;font-weight:300;font-size:12px;letter-spacing:3px;color:var(--muted);margin:10px 0 28px;text-transform:uppercase;animation:fade-up .8s .7s both}
+
+.rule{display:flex;align-items:center;gap:12px;width:100%;max-width:320px;margin:0 auto 28px;animation:fade-up .8s .75s both}
+.rule-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,85,0,.5))}
+.rule-line.r{background:linear-gradient(90deg,rgba(255,85,0,.5),transparent)}
+.rule-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);box-shadow:0 0 12px var(--orange)}
+
+.creator-card{position:relative;display:inline-flex;flex-direction:column;align-items:center;gap:5px;padding:20px 28px;border:1px solid var(--border);border-radius:18px;background:rgba(255,85,0,.04);backdrop-filter:blur(20px);overflow:hidden;animation:fade-up .8s .85s both;max-width:320px;width:100%}
+.creator-card::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--orange),var(--gold),var(--orange),transparent)}
+.c-label{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);font-family:'Oswald',sans-serif;font-weight:400}
+.c-name{font-family:'Bebas Neue',sans-serif;font-size:36px;letter-spacing:4px;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.c-sub{font-size:12px;letter-spacing:2px;color:var(--muted);font-family:'Oswald',sans-serif;font-weight:300}
+.pills{display:flex;gap:8px;margin-top:6px;flex-wrap:wrap;justify-content:center}
+.pill{padding:5px 14px;border-radius:20px;font-family:'Oswald',sans-serif;font-weight:600;font-size:11px;letter-spacing:2px;background:rgba(240,165,0,.08);border:1px solid rgba(240,165,0,.35);color:var(--gold);box-shadow:0 0 16px rgba(240,165,0,.12)}
+
+.scroll-cta{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:3;display:flex;flex-direction:column;align-items:center;gap:8px;animation:fade-up 1s 1.3s both}
+.scroll-cta span{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--muted);font-family:'Oswald',sans-serif}
+.scroll-box{width:24px;height:40px;border:1.5px solid rgba(255,85,0,.4);border-radius:12px;display:flex;align-items:flex-start;justify-content:center;padding-top:6px}
+.scroll-dot{width:4px;height:8px;border-radius:2px;background:var(--orange);animation:sb 2s ease-in-out infinite}
+@keyframes sb{0%,100%{transform:translateY(0);opacity:1}50%{transform:translateY(10px);opacity:.2}}
+@keyframes fade-up{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTION HEADER */
+.sec-head{position:relative;z-index:2;text-align:center;padding:52px 24px 16px}
+.sec-eye{font-family:'Oswald',sans-serif;font-size:10px;letter-spacing:5px;color:var(--orange);text-transform:uppercase;margin-bottom:8px;font-weight:400}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(38px,11vw,58px);letter-spacing:4px}
+.sec-title span{background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sec-count{font-size:13px;letter-spacing:2px;color:var(--muted);margin-top:6px;font-family:'Oswald',sans-serif;font-weight:300}
+
+/* MEME FEED */
+.feed{position:relative;z-index:2;padding:24px 16px 0;display:flex;flex-direction:column;gap:20px;max-width:580px;margin:0 auto}
+
+.card{position:relative;border-radius:20px;overflow:hidden;background:var(--dark2);border:1px solid rgba(255,255,255,.05);opacity:0;transform:translateY(40px) scale(.97);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1),box-shadow .4s,border-color .4s}
+.card.on{opacity:1;transform:translateY(0) scale(1)}
+.card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:linear-gradient(180deg,var(--red),var(--orange),var(--gold));opacity:0;transition:opacity .4s;z-index:5}
+.card:hover{border-color:rgba(255,85,0,.22);box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 0 1px rgba(255,85,0,.12),inset 0 1px 0 rgba(255,255,255,.04)}
+.card:hover::before{opacity:1}
+.card.final{border-color:rgba(240,165,0,.2);background:linear-gradient(135deg,var(--dark2),#191000)}
+.card.final::before{background:linear-gradient(180deg,var(--gold),var(--orange),var(--gold));opacity:.5}
+
+.ch{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 11px;border-bottom:1px solid rgba(255,255,255,.04)}
+.ch-num{font-family:'Oswald',sans-serif;font-weight:600;font-size:11px;letter-spacing:3px;color:var(--orange);opacity:.65}
+.ch-tag{font-family:'Oswald',sans-serif;font-weight:400;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);background:rgba(255,255,255,.04);padding:4px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.06)}
+.ch-tag.g{color:var(--gold);background:rgba(240,165,0,.07);border-color:rgba(240,165,0,.2)}
+
+.ci{overflow:hidden;background:#0a0a0a;line-height:0}
+.ci img{width:100%;height:auto;display:block;transition:transform .5s cubic-bezier(.16,1,.3,1)}
+.card:hover .ci img{transform:scale(1.025)}
+
+/* CLOSING */
+.closing{position:relative;z-index:2;margin:48px 16px 0;max-width:580px;margin-left:auto;margin-right:auto;padding:44px 28px;border-radius:24px;background:linear-gradient(135deg,rgba(204,30,30,.07),rgba(255,85,0,.05),rgba(240,165,0,.04));border:1px solid rgba(255,85,0,.18);text-align:center;overflow:hidden;opacity:0;transform:translateY(30px);transition:opacity .9s ease,transform .9s ease}
+.closing.on{opacity:1;transform:translateY(0)}
+.closing::before{content:'';position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,var(--red),var(--orange),var(--gold),var(--orange),var(--red),transparent)}
+.closing::after{content:'';position:absolute;bottom:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(255,85,0,.3),transparent)}
+.c-icon{font-size:42px;display:block;margin-bottom:20px;filter:drop-shadow(0 0 14px rgba(255,85,0,.6));animation:ff 3s ease-in-out infinite}
+@keyframes ff{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.06)}}
+.c-quote{font-family:'Khand',sans-serif;font-size:clamp(16px,4.5vw,19px);font-weight:400;line-height:1.9;color:rgba(237,232,223,.82);margin-bottom:28px}
+.c-quote strong{color:var(--ember);font-weight:600}
+.c-div{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--orange),transparent);margin:0 auto 22px}
+.c-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:5px;background:linear-gradient(135deg,var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.c-meta{font-family:'Oswald',sans-serif;font-weight:300;font-size:11px;letter-spacing:3px;color:var(--muted);margin-top:6px;text-transform:uppercase}
+
+/* FOOTER */
+footer{position:relative;z-index:2;text-align:center;padding:48px 24px 64px;margin-top:48px;border-top:1px solid rgba(255,255,255,.04)}
+.ft{font-family:'Bebas Neue',sans-serif;font-size:44px;letter-spacing:8px;background:linear-gradient(135deg,var(--red),var(--orange),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 0 20px rgba(255,85,0,.25))}
+.fs{font-family:'Oswald',sans-serif;font-weight:300;font-size:11px;letter-spacing:4px;color:var(--muted);text-transform:uppercase;margin-top:6px}
+
+@media(min-width:480px){.feed{padding:24px 20px 0;gap:24px}}
+</style>
+</head>
+<body>
+
+<div id="progress-bar"></div>
+<canvas id="fire-canvas"></canvas>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="logo-wrap">
+    <div class="logo-glow"></div>
+    <div class="logo-spin"></div>
+    <div class="logo-mask"></div>
+    <div class="logo-img">
+      <img src="tarang_logo.png" alt="Tarang 2K26"
+        onerror="this.style.display='none';document.getElementById('lfb').style.display='flex'">
+      <div class="logo-fb" id="lfb">
+        <span style="font-size:44px;line-height:1">🔥</span>
+        <span style="font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:4px;background:linear-gradient(135deg,#FF5500,#F0A500);-webkit-background-clip:text;-webkit-text-fill-color:transparent">TARANG</span>
+        <span style="font-family:'Oswald',sans-serif;font-size:12px;letter-spacing:3px;color:#555">2K26</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="hero-eyebrow">Mahakal Institute of Technology · Ujjain</p>
+  <h1 class="hero-title">TARANG</h1>
+  <p class="hero-year">2 K 2 6</p>
+  <p class="hero-tagline"><span class="hindi-text">कार्येषु कौशलम्</span> &nbsp;·&nbsp; Karyeshu Kaushalam</p>
+
+  <div class="rule">
+    <div class="rule-line"></div>
+    <div class="rule-dot"></div>
+    <div class="rule-line r"></div>
+  </div>
+
+  <div class="creator-card">
+    <span class="c-label">Meme Competition · Submitted by</span>
+    <span class="c-name">Kamlesh Porwal</span>
+    <span class="c-sub">CS1 · Final Year · 03-time Participant</span>
+    <div class="pills">
+      <span class="pill">🥇 Tarang 2024 Winner</span>
+      <span class="pill">🥇 Tarang 2025 Winner</span>
+    </div>
+  </div>
+
+  <div class="scroll-cta">
+    <span>Scroll to explore</span>
+    <div class="scroll-box"><div class="scroll-dot"></div></div>
+  </div>
+</section>
+
+<!-- SECTION HEADER -->
+<div class="sec-head">
+  <p class="sec-eye">Tarang 2K26 · Annual Cultural Fest · MIT Ujjain</p>
+  <h2 class="sec-title">THE <span>MEMES</span></h2>
+  <p class="sec-count">12 Entries · Every Event Covered</p>
+</div>
+
+<!-- MEME FEED -->
+<div class="feed">
+
+  <div class="card" data-i="0">
+    <div class="ch"><span class="ch-num">01 · 13</span><span class="ch-tag">Faculty Special</span></div>
+    <div class="ci"><img src="faculty.png" alt="Faculty Hidden Talent" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="1">
+    <div class="ch"><span class="ch-num">02 · 13</span><span class="ch-tag">Online Gaming</span></div>
+    <div class="ci"><img src="gamers.png" alt="Online Gaming" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="2">
+    <div class="ch"><span class="ch-num">03 · 13</span><span class="ch-tag">Antakshari</span></div>
+    <div class="ci"><img src="antakshri.png" alt="Antakshari" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="3">
+    <div class="ch"><span class="ch-num">04 · 13</span><span class="ch-tag">Quiz</span></div>
+    <div class="ci"><img src="quiz.png" alt="Quiz Discussion" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="4">
+    <div class="ch"><span class="ch-num">05 · 13</span><span class="ch-tag">Quiz</span></div>
+    <div class="ci"><img src="quiz 2.png" alt="Quiz Easy Question" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="5">
+    <div class="ch"><span class="ch-num">06 · 13</span><span class="ch-tag">Instant Dish</span></div>
+    <div class="ci"><img src="Instant dish.png" alt="Instant Dish" loading="lazy"></div>
+  </div>
+
+   <div class="card" data-i="6">
+    <div class="ch"><span class="ch-num">07 · 13</span><span class="ch-tag">Parliamentary Debate</span></div>
+    <div class="ci"><img src="Parliamentary Debate.jpg" alt="Parliamentary Debate" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="7">
+    <div class="ch"><span class="ch-num">07 · 13</span><span class="ch-tag">Ramp Walk</span></div>
+    <div class="ci"><img src="ramp.png" alt="Ramp Walk" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="8">
+    <div class="ch"><span class="ch-num">08 · 13</span><span class="ch-tag">DJ Night</span></div>
+    <div class="ci"><img src="dj night.png" alt="DJ Night" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="9">
+    <div class="ch"><span class="ch-num">09 · 13</span><span class="ch-tag">Placement Life</span></div>
+    <div class="ci"><img src="noida.png" alt="Noida Friend" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="10">
+    <div class="ch"><span class="ch-num">10 · 13</span><span class="ch-tag">End Semester</span></div>
+    <div class="ci"><img src="end sem.png" alt="End Sem Exams" loading="lazy"></div>
+  </div>
+
+  <div class="card" data-i="11">
+    <div class="ch"><span class="ch-num">11 · 13</span><span class="ch-tag">Final Year</span></div>
+    <div class="ci"><img src="final.png" alt="College Life" loading="lazy"></div>
+  </div>
+
+  <div class="card final" data-i="12">
+    <div class="ch" style="background:rgba(240,165,0,.04)">
+      <span class="ch-num" style="color:var(--gold);opacity:1;font-size:13px">12 · 13</span>
+      <span class="ch-tag g">✦ The Last One</span>
+    </div>
+    <div class="ci"><img src="LAST.png" alt="Enjoying Culturals For The Last Time" loading="lazy"></div>
+  </div>
+
+</div>
+
+<!-- CLOSING NOTE -->
+<div class="closing" id="closing">
+  <span class="c-icon">🔥</span>
+  <p class="c-quote">
+    Thanks to every teacher, every coordinator, and everyone who made this cultural event possible.<br><br>
+    On normal college days we make memories, but on events like these,
+    <strong>we actually live the moments</strong> — the ones we cherish for life.<br><br>
+    I don't tend to forget anything. And even if I did,
+    <strong>I could never forget the time I had in my college.</strong><br><br>
+    I can say this with full confidence —
+    <strong>the best days of my life were spent here.</strong>
+  </p>
+  <div class="c-div"></div>
+  <div class="c-name">Kamlesh Porwal</div>
+  <div class="c-meta">MIT · CS · Final Year · Tarang 2K26</div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft">TARANG 2K26</div>
+  <div class="fs"><span class="hindi-text">कार्येषु कौशलम्</span> · Meme Competition · MIT Ujjain</div>
+</footer>
+
+<script>
+/* FIRE PARTICLES */
+const cv=document.getElementById('fire-canvas'),ct=cv.getContext('2d');
+let W,H,pts=[];
+function rs(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight}
+rs();window.addEventListener('resize',rs);
+class P{
+  constructor(){this.r()}
+  r(){this.x=Math.random()*W;this.y=H+10;this.vx=(Math.random()-.5)*.8;this.vy=-(Math.random()*1.5+.4);this.l=0;this.ml=Math.random()*130+60;this.s=Math.random()*2.5+.8}
+  u(){this.x+=this.vx;this.y+=this.vy;this.l++;if(this.l>this.ml)this.r()}
+  d(){
+    const t=this.l/this.ml,a=t<.3?t/.3:1-(t-.3)/.7;
+    const c=t<.3?`rgba(255,210,60,${a*.55})`:t<.6?`rgba(255,90,0,${a*.45})`:`rgba(160,15,0,${a*.28})`;
+    ct.beginPath();ct.arc(this.x,this.y,this.s*(1-t*.5),0,Math.PI*2);ct.fillStyle=c;ct.fill();
+  }
+}
+for(let i=0;i<90;i++){const p=new P();p.l=Math.random()*p.ml;pts.push(p)}
+function af(){ct.clearRect(0,0,W,H);pts.forEach(p=>{p.u();p.d()});requestAnimationFrame(af)}
+af();
+
+/* SCROLL PROGRESS */
+const bar=document.getElementById('progress-bar');
+window.addEventListener('scroll',()=>{
+  bar.style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+},{passive:true});
+
+/* SCROLL REVEAL — cards */
+const cards=document.querySelectorAll('.card');
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    const i=parseInt(e.target.dataset.i||0);
+    setTimeout(()=>e.target.classList.add('on'),i%3*50);
+    io.unobserve(e.target);
+  });
+},{threshold:.08,rootMargin:'0px 0px -40px 0px'});
+cards.forEach(c=>io.observe(c));
+
+/* SCROLL REVEAL — closing */
+const cl=document.getElementById('closing');
+const cio=new IntersectionObserver(e=>{
+  if(e[0].isIntersecting){cl.classList.add('on');cio.disconnect()}
+},{threshold:.1});
+cio.observe(cl);
+
+/* Show first 2 immediately */
+setTimeout(()=>{cards[0]?.classList.add('on');cards[1]?.classList.add('on')},500);
+</script>
+</body>
+</html>
